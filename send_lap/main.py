@@ -33,7 +33,7 @@ def menu(communicator: Communicator):
     choice = input("Enter your choice: \n\n")
 
     if choice == "1":
-        communicator.start_command_pulsing("fuel")
+        communicator.start_command_pulsing("fuel_")
     elif choice == "2":
         communicator.start_command_pulsing("purge")
     elif choice == "3":

@@ -17,9 +17,9 @@ class SendingThread(threading.Thread):
 
         super().__init__()
         self.ser = ser 
-        self.command = command + "\0\n\r"  # Add the null character and newline for parsing
+        self.command = command + '\n'
 
-        assert command in ["fuel", "purge"], f"Invalid command {command}"
+        assert command in ["fuel_", "purge"], f"Invalid command {command}"
 
         self._stop_event = threading.Event()
 
@@ -32,6 +32,9 @@ class SendingThread(threading.Thread):
             print(f"Sending command {self.command.strip()}{dots_string}", end="\r")
             self.ser.write(self.command.encode())
             time.sleep(1)  # Adjust the sleep time as needed
+
+            if self.ser.in_waiting:
+                print(self.ser.read(self.ser.in_waiting))
 
     def stop(self):
         self._stop_event.set()
