@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial XBee(D1, D0);
+SoftwareSerial RFD(D1, D0);
 
 const int BUFFER_SIZE = 5;
 char buffer[BUFFER_SIZE]; // Buffer to store incoming characters
@@ -12,23 +12,23 @@ void check_purge(char* buf);
 void check_fuel(char* buf);
 
 void setup() {
-  XBee.begin(9600);
-  Serial.begin(9600);
+  RFD.begin(57600);
+  Serial.begin(57600);
 }
 
 void loop() {
   i++;
   
-  // Forward data from Serial to XBee
+  // Forward data from Serial to RFD
   if (Serial.available()) { 
-    XBee.write(Serial.read());
+    RFD.write(Serial.read());
   }
   
 
-  // Read data from XBee and process it
-  if (XBee.available()) {
-    // Serial.println("Data received from XBee:");
-    char receivedChar = XBee.read();
+  // Read data from RFD and process it
+  if (RFD.available()) {
+    // Serial.println("Data received from RFD:");
+    char receivedChar = RFD.read();
 
     // Echo received data to Serial
     Serial.write(receivedChar);
